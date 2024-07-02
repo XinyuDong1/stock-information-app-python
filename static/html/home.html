@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <title>Stock Information Dashboard</title>
+        <link rel = "stylesheet" href = "/static/css/home.css">
+    </head>
+    <body>
+        <div class = "container">
+            <h3> Stock Search</h3>
+            <form id = "stockSearchForm" onsubmit = "return searchAction(event)">
+                <div class = "input-group">
+                    <button type = "submit" class = "input-button">
+                        <img src = "/static/img/search-solid.svg" alt = "search">
+                    </button>
+                    <input type = "text" id = "stockSearchInput" placeholder = "Enter Stock Ticker Symbol" required>
+                    <button type = "button" class = "input-button" onclick = "clearAction()">
+                        <img src = "/static/img/times-solid.svg" alt = "clear">
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div id = "error-message" class = "error-message"></div>
+        <div id = "stock-info" class = "stock-info">
+          <div class="tab">
+              <button id = "company-tab" class="tablinks" onclick="openTab(event, 'company')">Company</button>
+              <button id = "stocksummary-tab" class="tablinks" onclick="openTab(event, 'stocksummary')">Stock Summary</button>
+              <button id = "charts-tab" class="tablinks" onclick="openTab(event, 'charts')">Charts</button>
+              <button id = "latestnews-tab" class="tablinks" onclick="openTab(event, 'latestnews')">Latest News</button>
+          </div>
+          <div id="company" class="tabcontent">
+              <img id="companyLogo" src="" alt="Company Logo" class = "company-logo">
+              <table class = "info-table">
+                <tr>
+                  <th>Company Name</th>
+                  <td id="companyName"></td>
+                </tr>
+                <tr>
+                  <th>Stock Ticker Symbol</th>
+                  <td id="stockTicker"></td>
+                </tr>
+                <tr>
+                  <th>Stock Exchange Code</th>
+                  <td id="stockExchange"></td>
+                </tr>
+                <tr>
+                  <th>Company Start Date</th>
+                  <td id="companyStartDate"></td>
+                </tr>
+                <tr>
+                  <th>Category</th>
+                  <td id="companyCategory"></td>
+                </tr>
+              </table>
+          </div>
+          <div id="stocksummary" class="tabcontent">
+            <table class = "info-table">
+              <tr>
+                <th>Stock Ticker Symbol</th>
+                <td id="stocktickersymbol"></td>
+              </tr>
+              <tr>
+                <th>Trading Day</th>
+                <td id="tradingday"></td>
+              </tr>
+              <tr>
+                <th>Previous Closing Price</th>
+                <td id="previousclosingprice"></td>
+              </tr>
+              <tr>
+                <th>Open Price</th>
+                <td id="openprice"></td>
+              </tr>
+              <tr>
+                <th>High Price</th>
+                <td id="highprice"></td>
+              </tr>
+              <tr>
+                <th>Low Price</th>
+                <td id="lowprice"></td>
+              </tr>
+              <tr>
+                <th>Change</th>
+                <td id="change">change<img id="changearrow" class="arrow" src="" alt="Arrow"></td>
+              </tr>
+              <tr>
+                <th>Change Percent</th>
+                <td id="changepercent">changepercent<img id="changepercentarrow" class="arrow" src="" alt="Arrow"></td>
+              </tr>
+            </table>
+            <div class="recommendation-trends">
+              <p class="strong-sell-word">Strong<br>Sell</p>
+              <div class="recommendation strong-sell">
+                <span id="strong-sell" class="number">4</span>
+              </div>
+              
+              <div class="recommendation sell">
+                <span id="sell" class="number">4</span>
+              </div>
+              
+              <div class="recommendation hold">
+                <span id="hold" class="number">20</span>
+              </div>
+              
+              <div class="recommendation buy">
+                <span id="buy" class="number">15</span>
+              </div>
+              
+              <div class="recommendation strong-buy">
+                <span id="strong-buy" class="number">7</span>
+              </div>
+              <p class="strong-buy-word">Strong<br>Buy</p>
+            </div>
+            <p class="recommendation-trends-note">Recommendation Trends</p>
+          </div>
+          <div id="charts" class="tabcontent">
+            <div id="container" class="chartscontainer"></div>
+          </div>
+          <div id="latestnews" class="tabcontent">
+            <div class="news">
+              <img src="" alt="newsImage" class="newsImage">
+              <div class="newsText">
+                <p class="newsTitle"></p>
+                <p class="newsTime"></p>
+                <a class="newsLink" href="">See Original Post</a>
+              </div>
+            </div>
+            <div class="news">
+              <img src="" alt="newsImage" class="newsImage">
+              <div class="newsText">
+                <p class="newsTitle"></p>
+                <p class="newsTime"></p>
+                <a class="newsLink" href="">See Original Post</a>
+              </div>
+            </div>
+            <div class="news">
+              <img src="" alt="newsImage" class="newsImage">
+              <div class="newsText">
+                <p class="newsTitle"></p>
+                <p class="newsTime"></p>
+                <a class="newsLink" href="">See Original Post</a>
+              </div>
+            </div>
+            <div class="news">
+              <img src="" alt="newsImage" class="newsImage">
+              <div class="newsText">
+                <p class="newsTitle"></p>
+                <p class="newsTime"></p>
+                <a class="newsLink" href="">See Original Post</a>
+              </div>
+            </div>
+            <div class="news">
+              <img src="" alt="newsImage" class="newsImage">
+              <div class="newsText">
+                <p class="newsTitle"></p>
+                <p class="newsTime"></p>
+                <a class="newsLink" href="">See Original Post</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.highcharts.com/stock/highstock.js"></script>
+        <script src="https://code.highcharts.com/stock/modules/data.js"></script>
+        <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+        <script src = "/static/js/home.js"></script>
+    </body>
+</html>
